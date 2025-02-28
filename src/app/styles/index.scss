@@ -1,0 +1,12 @@
+@use "./reset";
+@use "./vars/global";
+@use "./vars/colors";
+
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  color: var(--color-black);
+  background-color: var(--color-white);
+
+}

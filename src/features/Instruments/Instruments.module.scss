@@ -1,0 +1,18 @@
+.container {
+  width: var(--panel-width);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 10px;
+
+  color: var(--color-white);
+  background-color: var(--color-panel);
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
