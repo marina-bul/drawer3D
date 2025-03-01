@@ -6,7 +6,7 @@ import styles from './MainPage.module.scss';
 
 
 export const MainPage = () => {
-
+  console.log(styles)
   return (
     <div className={styles.page}>
       <Instruments />
