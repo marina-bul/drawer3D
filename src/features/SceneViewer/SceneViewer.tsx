@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unknown-property */
+import { memo } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 
@@ -17,7 +18,7 @@ interface Groups {
 }
 
 
-export const SceneViewer: FC<Groups> = ({ groups }) => {
+const SceneViewer: FC<Groups> = ({ groups }) => {
 
   console.log(groups)
 
@@ -58,3 +59,5 @@ export const SceneViewer: FC<Groups> = ({ groups }) => {
     </div>
   );
 };
+
+export const Viewer = memo(SceneViewer)

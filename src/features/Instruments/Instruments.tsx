@@ -1,5 +1,5 @@
 
-import { ButtonMain } from 'shared/ButtonMain/ButtonMain';
+import { ButtonMain } from 'shared/UI/ButtonMain/ButtonMain';
 
 import styles from './Instruments.module.scss';
 
@@ -7,10 +7,11 @@ import type { FC } from 'react';
 
 interface InstrumentsProps {
   addGroup: (groupType: 'box' | 'pyramide') => void
+  openModal: () => void
 }
 
 
-export const Instruments: FC<InstrumentsProps> = ({ addGroup }) => {
+export const Instruments: FC<InstrumentsProps> = ({ addGroup, openModal }) => {
 
   return (
     <div className={styles.container}>
@@ -21,8 +22,8 @@ export const Instruments: FC<InstrumentsProps> = ({ addGroup }) => {
       </ul>
 
       <div className={styles.buttons}>
-        <ButtonMain onClick={() => addGroup('box')}>Add box</ButtonMain>
-        <ButtonMain onClick={() => addGroup('pyramide')}>Add pyramide</ButtonMain>
+        <ButtonMain onClick={() => addGroup('box')}>Clear groups</ButtonMain>
+        <ButtonMain onClick={openModal}>Add group</ButtonMain>
       </div>
       
     </div>
