@@ -8,7 +8,7 @@ import type { FC, InputHTMLAttributes, ChangeEvent } from 'react';
 
 interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'color'> {
   label: string
-  value: number
+  value: string
   onInputChange?: (event: ChangeEvent<HTMLInputElement>) => void
 }
 

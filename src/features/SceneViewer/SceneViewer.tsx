@@ -1,27 +1,23 @@
-/* eslint-disable react/no-unknown-property */
+
 import { memo } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 
+import { MemoizedGroup } from './elems/Group/Group';
 import styles from './SceneViewer.module.scss';
 
 import type { FC } from 'react';
+import type { Group } from 'shared/types/Groups';
 
-interface Group {
-  type: 'box' | 'pyramide'
-  position: [number, number, number]
-  sizes?: [number, number, number]
-}
 
-interface Groups {
+interface ViewerProps {
   groups: Group[]
+  activeGroup: string
+  pickGroup: (id: string) => void
 }
 
 
-const SceneViewer: FC<Groups> = ({ groups }) => {
-
-  console.log(groups)
-
+const Viewer: FC<ViewerProps> = ({ groups, activeGroup, pickGroup }) => {
   return (
     <div className={styles.container}>
       <Canvas>
@@ -31,33 +27,18 @@ const SceneViewer: FC<Groups> = ({ groups }) => {
         <ambientLight intensity={1} />
         <pointLight position={[-5, -5, 0]} />
 
-        {groups.map((group, index) => {
-          switch(group.type) {
-          case 'box':
-            return (
-              <mesh key={index} position={group.position}>
-                <boxGeometry />
-                <meshBasicMaterial color="red" attach="material-0" />
-                <meshBasicMaterial color="blue" attach="material-1" />
-                <meshBasicMaterial color="green" attach="material-2" />
-                <meshBasicMaterial color="purple" attach="material-3" /> 
-                <meshBasicMaterial color="yellow" attach="material-4" />
-                <meshBasicMaterial color="orange" attach="material-5" />
-              </mesh>
-            )
-          case 'pyramide':
-            return (
-              <mesh key={index} position={group.position}>
-                <coneGeometry args={[1, 2, 4]} /> 
-                <meshStandardMaterial color="orange" />
-              </mesh>
-            )
-          }
-        })}
+        {groups.map((group) => (
+          <MemoizedGroup 
+            key={group.id} 
+            group={ group } 
+            isActive={group.id === activeGroup} 
+            pickGroup={pickGroup} 
+          />
+        ))}
       </Canvas>
 
     </div>
   );
 };
 
-export const Viewer = memo(SceneViewer)
+export const SceneViewer = memo(Viewer)

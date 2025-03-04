@@ -29,6 +29,10 @@ export default [
       "object-curly-spacing": ["error", "always"],
       "react/jsx-indent": ["error", 2],
       "react/jsx-indent-props": ["error", 2],
+      "react/no-unknown-property": [
+        "error",
+        { ignore: ["intensity", "position", "args", "attach"] },
+      ],
       indent: ["error", 2],
 
       "import/order": [

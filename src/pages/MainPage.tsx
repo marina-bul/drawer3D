@@ -1,40 +1,47 @@
 import { useCallback, useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { Instruments } from 'features/Instruments/Instruments';
-import { Viewer } from 'features/SceneViewer/SceneViewer';
-import { ButtonMain } from 'shared/UI/ButtonMain/ButtonMain';
-import { Form } from 'shared/UI/Form/Form';
+import { SceneViewer, Form } from 'features/SceneViewer';
+import { NavPanel } from 'features/Instruments/Instruments';
+import { ButtonMain } from 'shared/UI';
+import { useGroups } from 'shared/hooks/useGroups';
 
 import styles from './MainPage.module.scss';
 
-
-const getRandomPosition = () => [
-  (Math.random() - 0.5) * 10,
-  Math.random() * 5,    
-  (Math.random() - 0.5) * 10
-];
+import type { GroupParams } from 'shared/types/Groups';
 
 
 export const MainPage = () => {
-  const [groups, setGroups] = useState([])
+
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleAddGroup = useCallback((groupType: 'box' | 'pyramide') => {
-    setGroups(prev => [...prev, { type: groupType, position: getRandomPosition() }])
-  }, [])
+  const { 
+    groups, 
+    activeGroupId,  
+    handleAddGroup, 
+    handleResetGroups, 
+    handlePickGroup 
+  } = useGroups()
 
-  const handleOpenModal = useCallback(() => {
-    setIsModalOpen(true)
-  }, [])
 
-  const handleCloseModal = useCallback(() => {
-    setIsModalOpen(false)
-  }, [])
+  const handleOpenModal = () => {setIsModalOpen(true)}
+
+  const handleCloseModal = () => {setIsModalOpen(false)}
+
+  const handleSubmit = useCallback((groupVals: GroupParams) => {
+    handleAddGroup(groupVals)
+    handleCloseModal()
+  }, [handleAddGroup, handleCloseModal])
 
   return (
     <div className={styles.page}>
-      <Instruments addGroup={handleAddGroup} openModal={handleOpenModal} />
-      <Viewer groups={groups} />
+      <NavPanel 
+        groups={groups} 
+        activeGroup={activeGroupId}
+        openModal={handleOpenModal} 
+        resetGroups={handleResetGroups} 
+        pickGroup={handlePickGroup}
+      />
+      <SceneViewer groups={groups} activeGroup={activeGroupId} pickGroup={handlePickGroup} />
 
       <Dialog 
         open={isModalOpen} 
@@ -45,11 +52,13 @@ export const MainPage = () => {
       >
         <DialogTitle>Add group</DialogTitle> 
         <DialogContent>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <DialogActions>
-              <ButtonMain onClick={handleCloseModal}>Cancel</ButtonMain>
-              <ButtonMain type="submit" onClick={handleCloseModal}>
-                Add group
+              <ButtonMain onClick={handleCloseModal}>
+                Cancel
+              </ButtonMain>
+              <ButtonMain type="submit">
+                Ok
               </ButtonMain>
             </DialogActions>
           </Form>
