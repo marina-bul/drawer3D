@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    ["babel-plugin-transform-imports", {
+      "@mui/material": {
+        "transform": "@mui/material/${member}",
+        "preventFullImport": true
+      }
+    }]
+  ]
+}

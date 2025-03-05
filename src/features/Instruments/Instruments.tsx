@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { List, ListItem, ListItemText } from '@mui/material';
+import { List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
 import { ButtonMain } from 'shared/UI/ButtonMain/ButtonMain';
 
 import styles from './Instruments.module.scss';
@@ -54,6 +54,13 @@ const Instruments: FC<InstrumentsProps> = ({
                     }
                   } }
                 />
+                <ListItemIcon  
+                  sx={{
+                    backgroundColor: group.colors[0],
+                    minWidth: 20,
+                    height: 20
+                  }} />
+
               </ListItem>
             )})
         }
